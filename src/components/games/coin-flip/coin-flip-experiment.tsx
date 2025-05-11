@@ -12,13 +12,15 @@ import { getRandomIntegers, checkRandomOrgConfigured } from '@/app/actions/rando
 import { Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
+const RANDOM_OPTION_VALUE = "__RANDOM__";
+
 export default function CoinFlipExperiment() {
   const [isAdminMode] = useAdminMode();
   const { toast } = useToast();
   const [result, setResult] = useState<string>('-');
   const [counts, setCounts] = useState<{ Heads: number; Tails: number }>({ Heads: 0, Tails: 0 });
   const [totalFlips, setTotalFlips] = useState<number>(0);
-  const [adminOverride, setAdminOverride] = useState<string>('');
+  const [adminOverride, setAdminOverride] = useState<string>(RANDOM_OPTION_VALUE);
   const [isFlipping, setIsFlipping] = useState<boolean>(false);
   
   const [usingRandomOrg, setUsingRandomOrg] = useState<boolean>(false);
@@ -53,7 +55,7 @@ export default function CoinFlipExperiment() {
 
     let outcomeValue: number; // 0 for Heads, 1 for Tails
 
-    if (isClient && isAdminMode && adminOverride && (adminOverride === "Heads" || adminOverride === "Tails")) {
+    if (isClient && isAdminMode && adminOverride !== RANDOM_OPTION_VALUE && (adminOverride === "Heads" || adminOverride === "Tails")) {
       outcomeValue = adminOverride === "Heads" ? 0 : 1;
     } else if (usingRandomOrg) {
       try {
@@ -95,7 +97,7 @@ export default function CoinFlipExperiment() {
   
   useEffect(() => {
     if (!isAdminMode) {
-      setAdminOverride('');
+      setAdminOverride(RANDOM_OPTION_VALUE);
     }
   }, [isAdminMode]);
 
@@ -117,7 +119,7 @@ export default function CoinFlipExperiment() {
                 <SelectValue placeholder="Random" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Random</SelectItem>
+                <SelectItem value={RANDOM_OPTION_VALUE}>Random</SelectItem>
                 <SelectItem value="Heads">Heads</SelectItem>
                 <SelectItem value="Tails">Tails</SelectItem>
               </SelectContent>

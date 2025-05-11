@@ -13,6 +13,7 @@ import { Info } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 type Outcome = 'Win' | 'Lose';
+const RANDOM_OPTION_VALUE = "__RANDOM_OUTCOME__";
 
 export default function EnvelopeChoiceExperiment() {
   const [isAdminMode] = useAdminMode();
@@ -21,7 +22,7 @@ export default function EnvelopeChoiceExperiment() {
   const [result, setResult] = useState<string>('-');
   const [counts, setCounts] = useState<Record<Outcome, number>>({ Win: 0, Lose: 0 });
   const [totalChoices, setTotalChoices] = useState<number>(0);
-  const [adminOverride, setAdminOverride] = useState<Outcome | ''>('');
+  const [adminOverride, setAdminOverride] = useState<Outcome | typeof RANDOM_OPTION_VALUE>(RANDOM_OPTION_VALUE);
   const [isChoosing, setIsChoosing] = useState<boolean>(false);
 
   const [usingRandomOrg, setUsingRandomOrg] = useState<boolean>(false);
@@ -56,8 +57,8 @@ export default function EnvelopeChoiceExperiment() {
 
     let outcome: Outcome;
 
-    if (isClient && isAdminMode && adminOverride !== '') {
-      outcome = adminOverride;
+    if (isClient && isAdminMode && adminOverride !== RANDOM_OPTION_VALUE) {
+      outcome = adminOverride as Outcome;
     } else {
       let prizeLocation: number; // 0, 1, or 2
       if (usingRandomOrg) {
@@ -102,7 +103,7 @@ export default function EnvelopeChoiceExperiment() {
 
   useEffect(() => {
     if (!isAdminMode) {
-      setAdminOverride('');
+      setAdminOverride(RANDOM_OPTION_VALUE);
     }
   }, [isAdminMode]);
 
@@ -120,12 +121,12 @@ export default function EnvelopeChoiceExperiment() {
         {isClient && isAdminMode && (
           <div className="flex items-center space-x-2 ml-4">
             <Label htmlFor="adminEnvelopeOverride" className="text-sm">Admin:</Label>
-            <Select value={adminOverride} onValueChange={(value: Outcome | '') => setAdminOverride(value)} disabled={isChoosing}>
+            <Select value={adminOverride} onValueChange={(value: Outcome | typeof RANDOM_OPTION_VALUE) => setAdminOverride(value)} disabled={isChoosing}>
               <SelectTrigger id="adminEnvelopeOverride" className="w-[150px] h-9">
                 <SelectValue placeholder="Random Outcome" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Random</SelectItem>
+                <SelectItem value={RANDOM_OPTION_VALUE}>Random Outcome</SelectItem>
                 <SelectItem value="Win">Win</SelectItem>
                 <SelectItem value="Lose">Lose</SelectItem>
               </SelectContent>

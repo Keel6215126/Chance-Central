@@ -22,6 +22,7 @@ CARD_SUITS_FOR_DECK.forEach(suit => {
 });
 
 const TARGET_SPECIFIC_CARD = "Ace of Spades";
+const RANDOM_OPTION_VALUE = "__RANDOM_CARD__";
 
 export default function SpecificCardDrawExperiment() {
   const [isAdminMode] = useAdminMode();
@@ -30,7 +31,7 @@ export default function SpecificCardDrawExperiment() {
   const [result, setResult] = useState<string>('-');
   const [counts, setCounts] = useState<{ target: number; other: number }>({ target: 0, other: 0 });
   const [totalDraws, setTotalDraws] = useState<number>(0);
-  const [adminOverride, setAdminOverride] = useState<string>(''); // Empty string for random, or card name
+  const [adminOverride, setAdminOverride] = useState<string>(RANDOM_OPTION_VALUE);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
   const [usingRandomOrg, setUsingRandomOrg] = useState<boolean>(false);
@@ -65,7 +66,7 @@ export default function SpecificCardDrawExperiment() {
 
     let drawnCard: string;
 
-    if (isClient && isAdminMode && adminOverride !== '' && FULL_DECK.includes(adminOverride)) {
+    if (isClient && isAdminMode && adminOverride !== RANDOM_OPTION_VALUE && FULL_DECK.includes(adminOverride)) {
       drawnCard = adminOverride;
     } else if (usingRandomOrg) {
       try {
@@ -106,7 +107,7 @@ export default function SpecificCardDrawExperiment() {
 
   useEffect(() => {
     if (!isAdminMode) {
-      setAdminOverride('');
+      setAdminOverride(RANDOM_OPTION_VALUE);
     }
   }, [isAdminMode]);
 
@@ -129,7 +130,7 @@ export default function SpecificCardDrawExperiment() {
                 <SelectValue placeholder="Random Card" />
               </SelectTrigger>
               <SelectContent className="max-h-60"> {/* Allow scrolling for many options */}
-                <SelectItem value="">Random</SelectItem>
+                <SelectItem value={RANDOM_OPTION_VALUE}>Random Card</SelectItem>
                 {FULL_DECK.map(card => (
                   <SelectItem key={card} value={card}>{card}</SelectItem>
                 ))}

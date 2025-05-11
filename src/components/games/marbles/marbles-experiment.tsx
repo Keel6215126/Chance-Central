@@ -14,6 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const MARBLE_TYPES = ["Red", "Blue", "Green"] as const;
 type MarbleColor = typeof MARBLE_TYPES[number];
+const RANDOM_OPTION_VALUE = "__RANDOM_MARBLE__";
 
 const MARBLE_BAG_SETUP: Record<MarbleColor, number> = { Red: 5, Blue: 3, Green: 2 };
 const MARBLE_BAG: MarbleColor[] = [];
@@ -30,7 +31,7 @@ export default function MarblesExperiment() {
   const [result, setResult] = useState<string>('-');
   const [counts, setCounts] = useState<Record<MarbleColor, number>>({ Red: 0, Blue: 0, Green: 0 });
   const [totalDraws, setTotalDraws] = useState<number>(0);
-  const [adminOverride, setAdminOverride] = useState<MarbleColor | ''>('');
+  const [adminOverride, setAdminOverride] = useState<MarbleColor | typeof RANDOM_OPTION_VALUE>(RANDOM_OPTION_VALUE);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
   const [usingRandomOrg, setUsingRandomOrg] = useState<boolean>(false);
@@ -67,8 +68,8 @@ export default function MarblesExperiment() {
 
     let drawnMarble: MarbleColor;
 
-    if (isClient && isAdminMode && adminOverride !== '') {
-      drawnMarble = adminOverride;
+    if (isClient && isAdminMode && adminOverride !== RANDOM_OPTION_VALUE) {
+      drawnMarble = adminOverride as MarbleColor;
     } else if (usingRandomOrg) {
       try {
         const randomNumbers = await getRandomIntegers(1, 0, MARBLE_BAG.length - 1);
@@ -108,7 +109,7 @@ export default function MarblesExperiment() {
 
   useEffect(() => {
     if (!isAdminMode) {
-      setAdminOverride('');
+      setAdminOverride(RANDOM_OPTION_VALUE);
     }
   }, [isAdminMode]);
 
@@ -128,12 +129,12 @@ export default function MarblesExperiment() {
         {isClient && isAdminMode && (
           <div className="flex items-center space-x-2 ml-4">
             <Label htmlFor="adminMarbleOverride" className="text-sm">Admin:</Label>
-            <Select value={adminOverride} onValueChange={(value: MarbleColor | '') => setAdminOverride(value)} disabled={isDrawing}>
+            <Select value={adminOverride} onValueChange={(value: MarbleColor | typeof RANDOM_OPTION_VALUE) => setAdminOverride(value)} disabled={isDrawing}>
               <SelectTrigger id="adminMarbleOverride" className="w-[150px] h-9">
                 <SelectValue placeholder="Random Marble" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Random</SelectItem>
+                <SelectItem value={RANDOM_OPTION_VALUE}>Random Marble</SelectItem>
                 {MARBLE_TYPES.map(color => (
                   <SelectItem key={color} value={color}>{color}</SelectItem>
                 ))}

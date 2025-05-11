@@ -14,6 +14,7 @@ import { useToast } from '@/hooks/use-toast';
 
 const SUITS = ['Hearts', 'Diamonds', 'Clubs', 'Spades'] as const;
 type Suit = typeof SUITS[number];
+const RANDOM_OPTION_VALUE = "__RANDOM_SUIT__";
 
 export default function CardSuitDrawExperiment() {
   const [isAdminMode] = useAdminMode();
@@ -22,7 +23,7 @@ export default function CardSuitDrawExperiment() {
   const [result, setResult] = useState<string>('-');
   const [counts, setCounts] = useState<Record<Suit, number>>({ Hearts: 0, Diamonds: 0, Clubs: 0, Spades: 0 });
   const [totalDraws, setTotalDraws] = useState<number>(0);
-  const [adminOverride, setAdminOverride] = useState<Suit | ''>('');
+  const [adminOverride, setAdminOverride] = useState<Suit | typeof RANDOM_OPTION_VALUE>(RANDOM_OPTION_VALUE);
   const [isDrawing, setIsDrawing] = useState<boolean>(false);
 
   const [usingRandomOrg, setUsingRandomOrg] = useState<boolean>(false);
@@ -59,8 +60,8 @@ export default function CardSuitDrawExperiment() {
 
     let drawnSuit: Suit;
 
-    if (isClient && isAdminMode && adminOverride !== '') {
-      drawnSuit = adminOverride;
+    if (isClient && isAdminMode && adminOverride !== RANDOM_OPTION_VALUE) {
+      drawnSuit = adminOverride as Suit; // Type assertion
     } else if (usingRandomOrg) {
       try {
         const randomNumbers = await getRandomIntegers(1, 0, SUITS.length - 1);
@@ -100,7 +101,7 @@ export default function CardSuitDrawExperiment() {
 
   useEffect(() => {
     if (!isAdminMode) {
-      setAdminOverride('');
+      setAdminOverride(RANDOM_OPTION_VALUE);
     }
   }, [isAdminMode]);
 
@@ -117,12 +118,12 @@ export default function CardSuitDrawExperiment() {
         {isClient && isAdminMode && (
           <div className="flex items-center space-x-2 ml-4">
             <Label htmlFor="adminCardSuitOverride" className="text-sm">Admin:</Label>
-            <Select value={adminOverride} onValueChange={(value: Suit | '') => setAdminOverride(value)} disabled={isDrawing}>
+            <Select value={adminOverride} onValueChange={(value: Suit | typeof RANDOM_OPTION_VALUE) => setAdminOverride(value)} disabled={isDrawing}>
               <SelectTrigger id="adminCardSuitOverride" className="w-[150px] h-9">
                 <SelectValue placeholder="Random Suit" />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="">Random</SelectItem>
+                <SelectItem value={RANDOM_OPTION_VALUE}>Random Suit</SelectItem>
                 {SUITS.map(suit => (
                   <SelectItem key={suit} value={suit}>{suit}</SelectItem>
                 ))}
