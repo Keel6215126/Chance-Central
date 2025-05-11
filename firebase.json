@@ -1,0 +1,30 @@
+{
+    "functions": {
+      "runtime": "nodejs18",
+      "source": "src",
+      "memory": "1GiB",
+      "maxInstances": 10
+    },
+    "hosting": {
+      "public": "out",
+      "cleanUrls": true,
+      "trailingSlash": false,
+      "rewrites": [
+        {
+          "source": "/api/**",
+          "function": "studio"
+        },
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ]
+    },
+    "services": {
+      "studio": {
+        "maxInstances": 10,
+        "region": "us-central1"
+      }
+    }
+  }
+  

@@ -1,0 +1,416 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* General Styles & Theming */
+:root {
+  /* Dark Violet Theme (Default) */
+  --background: 240 10% 15%; /* #1e1e2f adjusted HSL */
+  --foreground: 0 0% 94.1%; /* #f0f0f0 HSL */
+  --card: 240 10% 18%; /* Slightly lighter than background */
+  --card-foreground: 0 0% 94.1%;
+  --popover: 240 10% 12%; /* Darker for popovers */
+  --popover-foreground: 0 0% 94.1%;
+  --primary: 180 100% 25.1%; /* #008080 Teal HSL */
+  --primary-foreground: 0 0% 100%; /* White for contrast on Teal */
+  --secondary: 240 5% 25%; /* Darker grey for secondary elements */
+  --secondary-foreground: 0 0% 94.1%;
+  --muted: 240 5% 30%; /* Muted grey */
+  --muted-foreground: 0 0% 70%;
+  --accent: 180 80% 35%; /* Brighter Teal for accents */
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 72.2% 50.6%; /* Standard destructive red */
+  --destructive-foreground: 0 0% 98%;
+  --border: 240 5% 25%; /* Border color */
+  --input: 240 5% 22%; /* Input background */
+  --ring: 180 80% 45%; /* Ring color - Teal focus */
+  --radius: 0.5rem;
+
+  /* Custom App Specific Variables */
+  --page-title-color: hsl(var(--foreground));
+  --game-title-color: hsl(var(--foreground));
+  --control-group-bg: hsl(var(--card));
+  --result-display-bg: hsl(var(--card));
+  --result-display-text: hsl(var(--primary));
+  --stats-text-color: hsl(var(--muted-foreground));
+  --info-text-color: hsl(var(--muted-foreground));
+  --container-bg: hsl(var(--card)); /* For main game cards and layouts */
+  --border-color: hsl(var(--border));
+
+  --admin-bar-bg: hsl(240 10% 10%);
+  --admin-bar-fg: hsl(0 0% 90%);
+
+  --game-card-hover-shadow-color: hsla(var(--accent), 0.6);
+  --game-icon-bg: hsl(var(--primary));
+  --game-icon-text-color: hsl(var(--primary-foreground));
+
+  /* Roulette Specific Colors */
+  --roulette-board-border: hsl(var(--secondary));
+  --roulette-board-bg: hsl(var(--background));
+  --roulette-wheel-bg: hsl(240 8% 20%);
+  --roulette-wheel-inner-bg: hsl(240 8% 25%);
+  --roulette-red: 0 70% 50%;
+  --roulette-black: 0 0% 10%;
+  --roulette-purple: 270 50% 40%; /* For the 0 pocket */
+  --roulette-pocket-border: hsl(var(--border));
+  --roulette-hub-outer: hsl(0 0% 70%);
+  --roulette-hub-mid1: hsl(0 0% 50%);
+  --roulette-hub-mid2: hsl(0 0% 30%);
+  --roulette-hub-inner: hsl(0 0% 15%);
+  --roulette-hub-border: hsl(0 0% 5%);
+  --roulette-pointer-color: hsl(var(--accent));
+
+  /* Chart Colors */
+  --chart-1: 180 100% 25.1%; /* Teal */
+  --chart-2: 240 70% 60%; /* Violet variant for charts */
+  --chart-3: 30 100% 50%; /* Orange variant for charts */
+  --chart-4: 120 70% 40%; /* Green variant for charts */
+  --chart-5: 0 0% 70%;   /* Grey variant for charts */
+
+  /* Sidebar (if using shadcn/ui sidebar component) */
+  --sidebar-background: hsl(var(--background));
+  --sidebar-foreground: hsl(var(--foreground));
+  --sidebar-primary: hsl(var(--primary));
+  --sidebar-primary-foreground: hsl(var(--primary-foreground));
+  --sidebar-accent: hsl(var(--accent));
+  --sidebar-accent-foreground: hsl(var(--accent-foreground));
+  --sidebar-border: hsl(var(--border));
+  --sidebar-ring: hsl(var(--ring));
+
+  /* Snake Game Colors */
+  --snake-game-bg-hsl: 233 30% 12%; /* Very dark desaturated blue, e.g. #181825 */
+  --snake-game-bg: hsl(var(--snake-game-bg-hsl));
+  --snake-color: hsl(var(--primary));
+  --snake-food-color: hsl(var(--destructive));
+
+  /* AI Assistant Colors */
+  --assistant-bubble-bg: hsl(var(--accent));
+  --assistant-bubble-fg: hsl(var(--accent-foreground));
+  --assistant-chat-header-bg: hsl(var(--primary));
+  --assistant-chat-header-fg: hsl(var(--primary-foreground));
+  --assistant-chat-bg: hsl(var(--card));
+  --assistant-chat-input-bg: hsl(var(--input));
+  --assistant-chat-user-message-bg: hsl(var(--primary) / 0.9); /* Slightly lighter primary */
+  --assistant-chat-user-message-fg: hsl(var(--primary-foreground));
+  --assistant-chat-ai-message-bg: hsl(var(--secondary));
+  --assistant-chat-ai-message-fg: hsl(var(--secondary-foreground));
+}
+
+/* Dark Blue Theme */
+.theme-dark-blue {
+  --background: 210 30% 12%;
+  --foreground: 210 20% 90%;
+  --card: 210 30% 15%;
+  --popover: 210 30% 10%;
+  --primary: 200 80% 50%;
+  --primary-foreground: 210 20% 95%;
+  --secondary: 210 25% 25%;
+  --muted: 210 25% 30%;
+  --accent: 200 70% 60%;
+  --border: 210 25% 25%;
+  --input: 210 25% 22%;
+  --ring: 200 70% 70%;
+
+  --game-card-hover-shadow-color: hsla(var(--accent), 0.55);
+  --game-icon-bg: hsl(var(--primary));
+  --roulette-purple: 250 50% 50%;
+  --chart-1: 200 80% 50%;
+  --chart-2: 220 70% 60%;
+  --snake-game-bg-hsl: 210 30% 10%; /* Darker blue for this theme */
+
+  --assistant-bubble-bg: hsl(var(--accent));
+  --assistant-bubble-fg: hsl(var(--accent-foreground));
+  --assistant-chat-header-bg: hsl(var(--primary));
+  --assistant-chat-header-fg: hsl(var(--primary-foreground));
+  --assistant-chat-bg: hsl(var(--card));
+  --assistant-chat-input-bg: hsl(var(--input));
+  --assistant-chat-user-message-bg: hsl(var(--primary) / 0.9);
+  --assistant-chat-user-message-fg: hsl(var(--primary-foreground));
+  --assistant-chat-ai-message-bg: hsl(var(--secondary));
+  --assistant-chat-ai-message-fg: hsl(var(--secondary-foreground));
+}
+
+/* Forest Green Theme */
+.theme-forest {
+  --background: 120 25% 12%;
+  --foreground: 100 15% 90%;
+  --card: 120 25% 15%;
+  --popover: 120 25% 10%;
+  --primary: 100 60% 40%;
+  --primary-foreground: 100 15% 95%;
+  --secondary: 120 20% 25%;
+  --muted: 120 20% 30%;
+  --accent: 100 50% 50%;
+  --border: 120 20% 25%;
+  --input: 120 20% 22%;
+  --ring: 100 50% 60%;
+
+  --game-card-hover-shadow-color: hsla(var(--accent), 0.55);
+  --game-icon-bg: hsl(var(--primary));
+  --roulette-purple: 150 50% 40%;
+  --chart-1: 100 60% 40%;
+  --chart-2: 140 50% 50%;
+  --snake-game-bg-hsl: 120 25% 10%; /* Darker green */
+
+  --assistant-bubble-bg: hsl(var(--accent));
+  --assistant-bubble-fg: hsl(var(--accent-foreground));
+  --assistant-chat-header-bg: hsl(var(--primary));
+  --assistant-chat-header-fg: hsl(var(--primary-foreground));
+  --assistant-chat-bg: hsl(var(--card));
+  --assistant-chat-input-bg: hsl(var(--input));
+  --assistant-chat-user-message-bg: hsl(var(--primary) / 0.9);
+  --assistant-chat-user-message-fg: hsl(var(--primary-foreground));
+  --assistant-chat-ai-message-bg: hsl(var(--secondary));
+  --assistant-chat-ai-message-fg: hsl(var(--secondary-foreground));
+}
+
+/* Sunset Orange Theme */
+.theme-sunset {
+  --background: 25 40% 15%;
+  --foreground: 30 30% 90%;
+  --card: 25 40% 18%;
+  --popover: 25 40% 12%;
+  --primary: 30 90% 55%;
+  --primary-foreground: 25 30% 98%;
+  --secondary: 25 35% 28%;
+  --muted: 25 35% 33%;
+  --accent: 30 80% 65%;
+  --border: 25 35% 28%;
+  --input: 25 35% 25%;
+  --ring: 30 80% 70%;
+
+  --game-card-hover-shadow-color: hsla(var(--accent), 0.55);
+  --game-icon-bg: hsl(var(--primary));
+  --roulette-purple: 45 60% 50%; /* Orange-yellow for zero */
+  --chart-1: 30 90% 55%;
+  --chart-2: 40 80% 60%;
+  --snake-game-bg-hsl: 25 40% 12%; /* Darker brown/orange */
+
+  --assistant-bubble-bg: hsl(var(--accent));
+  --assistant-bubble-fg: hsl(var(--accent-foreground));
+  --assistant-chat-header-bg: hsl(var(--primary));
+  --assistant-chat-header-fg: hsl(var(--primary-foreground));
+  --assistant-chat-bg: hsl(var(--card));
+  --assistant-chat-input-bg: hsl(var(--input));
+  --assistant-chat-user-message-bg: hsl(var(--primary) / 0.9);
+  --assistant-chat-user-message-fg: hsl(var(--primary-foreground));
+  --assistant-chat-ai-message-bg: hsl(var(--secondary));
+  --assistant-chat-ai-message-fg: hsl(var(--secondary-foreground));
+}
+
+/* Midnight Plum Theme */
+.theme-midnight-plum {
+  --background: 270 25% 10%; /* Deep plum */
+  --foreground: 270 10% 85%; /* Light lavender/grey */
+  --card: 270 25% 13%;
+  --popover: 270 25% 8%;
+  --primary: 300 60% 50%; /* Vibrant magenta/purple */
+  --primary-foreground: 300 10% 95%;
+  --secondary: 270 20% 20%;
+  --muted: 270 20% 25%;
+  --accent: 300 50% 60%; /* Slightly lighter accent */
+  --border: 270 20% 20%;
+  --input: 270 20% 18%;
+  --ring: 300 50% 65%;
+
+  --game-card-hover-shadow-color: hsla(var(--accent), 0.55);
+  --game-icon-bg: hsl(var(--primary));
+  --roulette-purple: 280 40% 35%; /* Darker purple for zero to fit theme */
+  --chart-1: 300 60% 50%;
+  --chart-2: 280 50% 55%;
+  --snake-game-bg-hsl: 270 25% 8%; /* Deeper plum */
+
+  --assistant-bubble-bg: hsl(var(--accent));
+  --assistant-bubble-fg: hsl(var(--accent-foreground));
+  --assistant-chat-header-bg: hsl(var(--primary));
+  --assistant-chat-header-fg: hsl(var(--primary-foreground));
+  --assistant-chat-bg: hsl(var(--card));
+  --assistant-chat-input-bg: hsl(var(--input));
+  --assistant-chat-user-message-bg: hsl(var(--primary) / 0.9);
+  --assistant-chat-user-message-fg: hsl(var(--primary-foreground));
+  --assistant-chat-ai-message-bg: hsl(var(--secondary));
+  --assistant-chat-ai-message-fg: hsl(var(--secondary-foreground));
+}
+
+/* Cyber Neon Theme */
+.theme-cyber-neon {
+  --background: 220 50% 5%; /* Very dark desaturated blue */
+  --foreground: 180 100% 80%; /* Bright cyan */
+  --card: 220 40% 10%;
+  --popover: 220 50% 3%;
+  --primary: 330 100% 55%; /* Hot pink */
+  --primary-foreground: 330 20% 98%;
+  --secondary: 200 40% 15%;
+  --muted: 200 40% 20%;
+  --accent: 180 100% 50%; /* Pure cyan accent */
+  --border: 200 30% 25%;
+  --input: 200 40% 12%;
+  --ring: 180 100% 60%;
+
+  --page-title-color: hsl(var(--accent));
+  --game-title-color: hsl(var(--accent));
+  --game-card-hover-shadow-color: hsla(var(--accent), 0.7);
+  --game-icon-bg: hsl(var(--accent));
+  --game-icon-text-color: hsl(var(--background)); /* High contrast for icon */
+  --roulette-red: 0 100% 55%; /* Neon red */
+  --roulette-black: 220 20% 15%; /* Darker black */
+  --roulette-purple: 270 100% 60%; /* Neon purple for 0 */
+  --chart-1: 330 100% 55%; /* Hot pink */
+  --chart-2: 180 100% 50%; /* Cyan */
+  --chart-3: 60 100% 50%; /* Neon yellow */
+  --snake-game-bg-hsl: 220 50% 3%; /* Even darker blue */
+
+  --assistant-bubble-bg: hsl(var(--accent));
+  --assistant-bubble-fg: hsl(var(--background)); /* High contrast */
+  --assistant-chat-header-bg: hsl(var(--primary));
+  --assistant-chat-header-fg: hsl(var(--primary-foreground));
+  --assistant-chat-bg: hsl(var(--card));
+  --assistant-chat-input-bg: hsl(var(--input));
+  --assistant-chat-user-message-bg: hsl(var(--primary) / 0.9);
+  --assistant-chat-user-message-fg: hsl(var(--primary-foreground));
+  --assistant-chat-ai-message-bg: hsl(var(--secondary));
+  --assistant-chat-ai-message-fg: hsl(var(--foreground)); /* Cyan on dark secondary */
+}
+
+/* Oceanic Deep Theme */
+.theme-oceanic-deep {
+  --background: 200 60% 8%; /* Deep ocean blue */
+  --foreground: 180 30% 80%; /* Lighter, slightly desaturated cyan */
+  --card: 200 50% 12%;
+  --popover: 200 60% 6%;
+  --primary: 170 70% 40%; /* Sea green/teal */
+  --primary-foreground: 170 15% 95%;
+  --secondary: 190 40% 20%;
+  --muted: 190 40% 25%;
+  --accent: 170 60% 50%; /* Brighter sea green */
+  --border: 190 40% 20%;
+  --input: 190 40% 18%;
+  --ring: 170 60% 55%;
+
+  --game-card-hover-shadow-color: hsla(var(--accent), 0.55);
+  --game-icon-bg: hsl(var(--primary));
+  --roulette-purple: 220 50% 45%; /* Deep blue/purple for zero */
+  --chart-1: 170 70% 40%;
+  --chart-2: 190 60% 50%;
+  --snake-game-bg-hsl: 200 60% 6%; /* Deeper ocean blue */
+
+  --assistant-bubble-bg: hsl(var(--accent));
+  --assistant-bubble-fg: hsl(var(--accent-foreground));
+  --assistant-chat-header-bg: hsl(var(--primary));
+  --assistant-chat-header-fg: hsl(var(--primary-foreground));
+  --assistant-chat-bg: hsl(var(--card));
+  --assistant-chat-input-bg: hsl(var(--input));
+  --assistant-chat-user-message-bg: hsl(var(--primary) / 0.9);
+  --assistant-chat-user-message-fg: hsl(var(--primary-foreground));
+  --assistant-chat-ai-message-bg: hsl(var(--secondary));
+  --assistant-chat-ai-message-fg: hsl(var(--secondary-foreground));
+}
+
+
+/* Global Styles */
+body {
+  @apply bg-background text-foreground min-h-screen font-sans antialiased;
+}
+
+.page-title {
+  @apply text-3xl font-bold text-center my-4 text-[var(--page-title-color)] md:text-4xl;
+}
+
+.game-title {
+  @apply text-2xl font-semibold text-center mb-6 text-[var(--game-title-color)] md:text-3xl;
+}
+
+.control-group {
+  @apply flex flex-col sm:flex-row items-center justify-center gap-4 p-4 mb-4 rounded-md bg-[var(--control-group-bg)] shadow;
+}
+
+.result-display {
+  @apply text-2xl font-semibold text-center p-4 my-4 rounded-md bg-[var(--result-display-bg)] text-[var(--result-display-text)] shadow-inner;
+  min-height: 70px; /* Ensure consistent height */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stats-text {
+  @apply text-sm text-center text-[var(--stats-text-color)];
+}
+
+.info-text {
+  @apply text-xs text-center text-[var(--info-text-color)] opacity-80;
+}
+
+/* Admin Mode Specific Styling */
+.admin-mode-active {
+  /* Example: Add a border to the body or specific elements when admin mode is active */
+  /* --admin-indicator-color: hsl(var(--destructive));
+  border-top: 3px solid var(--admin-indicator-color) !important; */
+}
+/* Style for the admin override select trigger in admin mode */
+.admin-mode-active #adminCoinOverride,
+.admin-mode-active #adminRouletteOverride {
+  /* border-color: hsl(var(--destructive)) !important; */
+}
+
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+}
+
+@layer utilities {
+  .container-centered {
+    @apply max-w-4xl mx-auto px-4;
+  }
+}
+
+/* ShadCN Chart styling (ensure these are defined if not using component-level themeing) */
+.recharts-cartesian-axis-tick-value {
+  font-family: var(--font-sans); /* Or your chosen font */
+  fill: hsl(var(--muted-foreground));
+}
+.recharts-legend-item-text {
+  color: hsl(var(--foreground)) !important;
+}
+.recharts-tooltip-wrapper {
+  outline: none !important;
+}
+.recharts-default-tooltip {
+  background-color: hsl(var(--background)) !important;
+  border-color: hsl(var(--border)) !important;
+  color: hsl(var(--foreground)) !important;
+  border-radius: var(--radius) !important;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1), 0 2px 4px -1px rgba(0,0,0,0.06);
+}
+
+/* Roulette Pocket Colors - These are actual classes used by cn() in the component */
+.bg-roulette-red {
+  background-color: hsl(var(--roulette-red));
+}
+.bg-roulette-black {
+  background-color: hsl(var(--roulette-black));
+}
+.bg-roulette-purple {
+  background-color: hsl(var(--roulette-purple));
+}
+
+/* Ensure text color on primary buttons is correct based on theme */
+.btn-primary {
+  background-color: hsl(var(--primary));
+  color: hsl(var(--primary-foreground));
+}
+.btn-primary:hover {
+  /* Slightly darken or adjust as needed */
+  background-color: hsl(var(--primary) / 0.9);
+}
+
+/* Ensure text color on accent buttons is correct based on theme */
+.btn-accent {
+  background-color: hsl(var(--accent));
+  color: hsl(var(--accent-foreground));
+}
+.btn-accent:hover {
+  background-color: hsl(var(--accent) / 0.9);
+}
